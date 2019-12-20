@@ -1,0 +1,51 @@
+# -*- coding: utf-8
+
+import serial
+import time
+
+ser = serial.Serial('COM4', 9600)
+
+commands = {'a': 'led on',
+            'b': 'led off',
+            'c': 'get photo val'}
+
+def wait_for_data(ser):
+    timeout = 0
+    while not ser.in_waiting and timeout < 1:
+        time.sleep(0.01)
+        timeout += 0.01
+        
+def start_interactive_mode(ser):
+    while True:
+        command = input('Enter command:')
+        ser.write(bytes(command, 'utf8'))
+        wait_for_data(ser)
+        while ser.in_waiting:
+            line = ser.readline()
+            line = line.decode('utf8')
+            line = line.strip()
+            print(line)
+            start_light_managing(line)
+            
+def start_light_managing(ser):
+    if command = commands{'led on'}:
+        ser.write(bytes(command,'utf-8')) 
+        time.sleep(0.5)
+        ser.write(bytes('c', 'utf-8'))
+        if line > 1400:
+            ser.write(bytes('b', 'utf-8'))
+            time.sleep(0.5)
+            ser.write(bytes('l', 'utf-8'))
+            time.sleep(2)
+        else: 
+            ser.write(bytes('b', 'utf-8'))
+            time.sleep(0.5)
+            ser.write(bytes('a', 'utf-8'))
+    else if command = commands{'get photo val'}:
+        print(line)
+     # implement me
+        
+            
+start_interactive_mode(ser)            
+ser.close()
+
