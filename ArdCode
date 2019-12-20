@@ -1,0 +1,29 @@
+#define LED_PIN 12
+#define PHOTO_PIN A0
+
+int LED_PINN=12;
+  
+void setup() {
+  pinMode(LED_PIN, OUTPUT);
+  Serial.begin(9600);
+}
+void loop() {
+  while(Serial.available() > 0) {
+    char command = Serial.read();
+    if(command == 'a') {
+      digitalWrite(LED_PIN, HIGH);
+      Serial.println("# get command led on, done");
+    }
+    else if(command == 'l') {
+      digitalWrite(LED_PINN, HIGH);
+      Serial.println("# get command led on for people, done");
+    }
+    else if(command == 'b') {
+      digitalWrite(LED_PIN, LOW);
+      Serial.println("# get command led off, done");
+    }else if (command == 'c'){
+      int val = analogRead(PHOTO_PIN);
+      Serial.println(val);
+    }
+  }
+}
